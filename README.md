@@ -15,7 +15,9 @@ Our design principles are:
 * _Flexible development_: Make it easy for new users to try out research ideas.
 * _Compact and reliable_: Provide implementations for a few, battle-tested
                           algorithms.
-* _Reproducible_: Facilitate reproducibility in results.
+* _Reproducible_: Facilitate reproducibility in results. In particular, our
+                  setup follows the recommendations given by
+                  [Machado et al. (2018)][machado].
 
 In the spirit of these principles, this first version focuses on supporting the
 state-of-the-art, single-GPU *Rainbow* agent ([Hessel et al., 2018][rainbow])
@@ -33,6 +35,22 @@ For additional details, please see our
 [documentation](https://github.com/google/dopamine/tree/master/docs).
 
 This is not an official Google product.
+
+## What's new
+*  **01/11/2018:** Download links for each individual checkpoint, to avoid
+   having to download all of the checkpoints.
+*  **29/10/2018:** Graph definitions now show up in Tensorboard.
+*  **16/10/2018:** Fixed a subtle bug in the IQN implementation and upated
+   the colab tools, the JSON files, and all the downloadable data.
+*  **18/09/2018:** Added support for double-DQN style updates for the
+   `ImplicitQuantileAgent`.
+   *  Can be enabled via the `double_dqn` constructor parameter.
+*  **18/09/2018:** Added support for reporting in-iteration losses directly from
+   the agent to Tensorboard.
+   *  Include the flag `--debug_mode` in your command line to enable it.
+   *  Control frequency of writes with the `summary_writing_frequency`
+      agent constructor parameter (defaults to `500`).
+*  **27/08/2018:** Dopamine launched!
 
 ## Instructions
 ### Install via source
@@ -68,11 +86,14 @@ source dopamine-env/bin/activate
 This will create a directory called `dopamine-env` in which your virtual
 environment lives. The last command activates the environment.
 
-Then, install the dependencies to Dopamine:
+Then, install the dependencies to Dopamine. If you don't have access to a
+GPU, then replace `tensorflow-gpu` with `tensorflow` in the line below
+(see [Tensorflow instructions](https://www.tensorflow.org/install/install_linux)
+for details).
 
 ```
 sudo apt-get update && sudo apt-get install cmake zlib1g-dev
-pip install absl-py atari-py gin-config gym opencv-python tensorflow
+pip install absl-py atari-py gin-config gym opencv-python tensorflow-gpu
 ```
 
 During installation, you may safely ignore the following error message:
@@ -184,6 +205,10 @@ python -um tests.agents.rainbow.rainbow_agent_test
 [Bellemare et al., *The Arcade Learning Environment: An evaluation platform for
 general agents*. Journal of Artificial Intelligence Research, 2013.][ale]
 
+[Machado et al., *Revisiting the Arcade Learning Environment: Evaluation
+Protocols and Open Problems for General Agents*, Journal of Artificial
+Intelligence Research, 2018.][machado]
+
 [Hessel et al., *Rainbow: Combining Improvements in Deep Reinforcement Learning*.
 Proceedings of the AAAI Conference on Artificial Intelligence, 2018.][rainbow]
 
@@ -206,10 +231,11 @@ Dopamine, https://github.com/google/dopamine, 2018.
 
 
 
-[ale]: https://arxiv.org/abs/1207.4708
+[machado]: https://jair.org/index.php/jair/article/view/11182
+[ale]: https://jair.org/index.php/jair/article/view/10819
 [dqn]: https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf
-[a3c]: https://arxiv.org/abs/1602.01783
+[a3c]: http://proceedings.mlr.press/v48/mniha16.html
 [prioritized_replay]: https://arxiv.org/abs/1511.05952
-[c51]: https://arxiv.org/abs/1707.06887
-[rainbow]: https://arxiv.org/abs/1710.02298
+[c51]: http://proceedings.mlr.press/v70/bellemare17a.html
+[rainbow]: https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/download/17204/16680
 [iqn]: https://arxiv.org/abs/1806.06923

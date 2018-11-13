@@ -1,3 +1,18 @@
+# coding=utf-8
+# Copyright 2018 The Dopamine Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Copyright 2018 The Dopamine Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -294,8 +309,9 @@ class RainbowAgentTest(tf.test.TestCase):
     self._vmax = 7.
     self._min_replay_history = 32
     self._epsilon_decay_period = 90
-    self.observation_shape = dqn_agent.OBSERVATION_SHAPE
-    self.stack_size = dqn_agent.STACK_SIZE
+    self.observation_shape = dqn_agent.NATURE_DQN_OBSERVATION_SHAPE
+    self.observation_dtype = dqn_agent.NATURE_DQN_DTYPE
+    self.stack_size = dqn_agent.NATURE_DQN_STACK_SIZE
     self.zero_state = np.zeros(
         [1, self.observation_shape, self.observation_shape, self.stack_size])
 

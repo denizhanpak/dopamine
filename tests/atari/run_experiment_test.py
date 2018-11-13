@@ -1,3 +1,18 @@
+# coding=utf-8
+# Copyright 2018 The Dopamine Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Copyright 2018 The Dopamine Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -123,7 +138,7 @@ class RunnerTest(tf.test.TestCase):
     self._agent = mock.Mock()
     self._agent.begin_episode.side_effect = lambda x: 0
     self._agent.step.side_effect = self._agent_step
-    self._create_agent_fn = lambda x, y: self._agent
+    self._create_agent_fn = lambda x, y, summary_writer: self._agent
     self._test_subdir = '/tmp/dopamine_tests'
     shutil.rmtree(self._test_subdir, ignore_errors=True)
     os.makedirs(self._test_subdir)
@@ -156,7 +171,7 @@ class RunnerTest(tf.test.TestCase):
     mock_logger = mock.Mock()
     mock_logger_constructor.return_value = mock_logger
     runner = run_experiment.Runner(self._test_subdir,
-                                   lambda x, y: agent,
+                                   lambda x, y, summary_writer: agent,
                                    create_environment_fn=lambda x, y: x,
                                    game_name='Test')
     self.assertEqual(0, runner._start_iteration)
@@ -184,7 +199,7 @@ class RunnerTest(tf.test.TestCase):
     mock_agent = mock.Mock()
     mock_agent.unbundle.return_value = True
     runner = run_experiment.Runner(self._test_subdir,
-                                   lambda x, y: mock_agent,
+                                   lambda x, y, summary_writer: mock_agent,
                                    game_name='Pong')
     expected_iteration = current_iteration + 1
     self.assertEqual(expected_iteration, runner._start_iteration)
